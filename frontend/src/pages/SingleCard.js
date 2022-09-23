@@ -1,3 +1,7 @@
 export default function SingleCard() {
-    return <h1>Single Card</h1>
+    return (
+      <>
+    <h1>Single Card</h1>
+    </>
+    )
   }

@@ -7,6 +7,7 @@ import postRoutes from './routes/posts.js';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import Sib from 'sib-api-v3-sdk';
 const app = express();
 dotenv.config();
 
@@ -17,6 +18,11 @@ app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 
 // https://www.mongodb/cloud/atlas
+
+const client = Sib.ApiClient.instance
+
+const apiKey = client.authentications['api-key']
+apiKey.apiKey = process.env.API_KEY
 
 const PORT = process.env.PORT || 5001;
 

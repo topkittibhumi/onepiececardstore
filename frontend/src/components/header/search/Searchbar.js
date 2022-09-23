@@ -6,9 +6,24 @@ import Cart from './icon/cart.svg';
 import Close from './icon/xmark.svg';
 import User from './icon/user.svg';
 import MagnifyingGlass from './icon/magnifying-glass.svg';
+import {useState} from 'react';
+import LoginFeature  from "../../../features/login/LoginFeature"
+
+
 
 export default function SearchBar() {
+
+    const [state, setState ] = useState(false)
+    const accountClickHandler = async (e) => {
+        e.preventDefault();
+        setState(!state);
+
+    }
+
   return (
+    <>
+    {state && <LoginFeature/>}
+    
     <div class="search-container">
 
         <div class="logo"> 
@@ -50,7 +65,7 @@ export default function SearchBar() {
                 </Link>
         
             </div>
-            <div className="user-icon-container">
+            <div className="user-icon-container" onClick={accountClickHandler}  >
                 <Link className="account-container">
                     <div>
                     <img src={User} alt="" width="30" />
@@ -60,10 +75,11 @@ export default function SearchBar() {
                       </div>
 
                 </Link>
-        
+                
             </div>
         </div>
     </div>
+    </>
   )
 }
 

@@ -5,10 +5,13 @@ import  jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
+import e from 'express';
+import sendEmail from '../utils/sendEmail.js'
+import crypto from 'crypto';
 
 export const registerUser = asyncHandler(async(req, res) => {
-    const { name, email, password} = req.body
-    if(!name || !email || !password){
+    const { name,surname, email, password,} = req.body
+    if(!name || !email || !password || !surname ){
         res.status(400)
         throw new Error('Please add all fields')
     }
@@ -28,6 +31,7 @@ export const registerUser = asyncHandler(async(req, res) => {
 
     const user = await User.create({
         name,
+        surname,
         email,
         password: hashedPassword,
         type: 1
@@ -72,7 +76,7 @@ export const loginUser =asyncHandler(async (req, res) => {
 })
 
 
-// @desc G use data
+// @desc Get use data
 // @route GET /api/users/me
 // @acess Private
 
@@ -86,10 +90,85 @@ export const getMe = asyncHandler(async(req, res) => {
     })
 })
 
+// @desc Forget P
+// @route Get
+// @access Public
+
+export const forgetPassword = asyncHandler(async(req,res) =>{
+    const {email} = req.body;
+    try {
+        const user = await User.findOne({email});
+        if(user){
+            const resetToken = user.getResetPasswordToken()
+            await user.save();
+
+            const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
+            const message = `
+                <h1>you have requested a password reset </h1>
+                <p>Please go to this link to reset your password</p>
+                <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+            `
+            try {
+                await sendEmail({
+                    to: user.email,
+                    subject: "Password Reset Request",
+                    text: message
+                });
+                res.status(200).json({ sucess: true, data: "Email Sent"})
+            } catch (error){
+                user.resetPasswordToken = undefined;
+                user.resetPasswordExpire = undefined;
+
+                await user.save();
+
+                res.status(400)
+                throw new Error('Email count not be send') 
+            }
+
+        } else{
+            res.status(400)
+            throw new Error("Email could not be sent")
+        }
+    } catch(error){
+        res.status(400)
+        throw new Error("Something went wrong")
+    }
+})
+
+export const resetPassword = asyncHandler(async(req,res) =>{
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.resetToken).digest("hex");
+
+    try {
+        const user = await User.findOne({
+            resetPasswordToken,
+            reSetPasswordExpire: {$gt: Date.now()}  
+        })
+        if(!user){
+            res.status(400)
+            throw new Error('Invalid Reset Token')
+        }
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save();
+
+        res.status(201).json({
+            success: true,
+            data: "Password Reset Success"
+        })
+    } catch(error){
+
+    }
+})
+
+// Generate reset token
+
+
+
 // Generate JWT
 
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: '1m',
+        expiresIn: process.env.JWT_EXIPRE,
     })
 }

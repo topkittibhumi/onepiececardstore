@@ -40,7 +40,7 @@ export default function LoginFeature() {
             }
         
             try {
-                const {data} = await axios.post("/api/users/regiser", { name, surname, email, password}, config);
+                const {data} = await axios.post("/api/users/register", { name, surname, email, password}, config);
                 localStorage.setItem("authToken", data.token);
                 //history.push("/");
             } catch(error){
@@ -156,7 +156,7 @@ export default function LoginFeature() {
           </div>
     
 
-          <button type="submit" className="btn btn-primary"> Register </button>
+          <button type="submit" className="btn btn-primary"> Log in </button>
           <span className="register-subtext"> Don't have account? <div className="goto-register" onClick={gotoRegisterHandler}>Register</div></span>
           <span className="forget-subtext"> Lost password? <div className="goto-forget" onClick={gotoForgetPasswordHandler}>Recover password</div></span>
         </form>

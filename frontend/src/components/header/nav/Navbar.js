@@ -4,7 +4,6 @@ export default function Navbar() {
   return (
     <div className="nav">
       <ul>
-        <CustomLink to="/">Home</CustomLink>
         <CustomLink to="/single">Single Card</CustomLink>
         <CustomLink to="/graded">Graded Card</CustomLink>
         <CustomLink to="/sell">Sell</CustomLink>
@@ -19,11 +18,9 @@ function CustomLink({ to, children, ...props }) {
 
   return (
     <li className={isActive ? "active" : ""}>
-      <div className="hi">
       <Link to={to} {...props}>
         {children}
       </Link>
-      </div>
     </li>
   )
 }

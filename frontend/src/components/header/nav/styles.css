@@ -1,14 +1,15 @@
 .nav ul {
     list-style: none;
-    background:#663366;
+    background: grey;
     text-align:center;
     padding:0;
     margin:0;
+    display: flex;
+    justify-content: center;
     
 }
 .nav li {
     display: inline-block;
-
     
 }
 .nav a{
@@ -17,7 +18,7 @@
     width: 200px;
     display:block;
     padding: 15px;
-    font-size: 25px;
+    font-size: 18px;
     font-family: Helvetica;
     
 }

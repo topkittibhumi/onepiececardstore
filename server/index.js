@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import userRouter from './routes/userRoutes.js';
 const app = express();
 dotenv.config();
 
@@ -28,3 +29,4 @@ app.get('/api/products', (req,res)=>{
 
 });
 app.use('/api/products', productRouter);
+app.use('/api/users', userRouter);

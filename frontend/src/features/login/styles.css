@@ -28,3 +28,50 @@
     box-shadow: 0px 0px 1px 1px black;
     top: 70px;
 }
+
+
+
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    border: black solid;
+    right: 40px;
+    box-shadow: 0px 0px 1px 1px black;
+    top: 70px;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content .btn {
+    color: black;
+    border: none;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  
+
+
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: yellow;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}

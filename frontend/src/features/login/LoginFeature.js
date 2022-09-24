@@ -1,15 +1,27 @@
 import "./styles.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {useState, useEffect} from 'react';
-
-
+import {useState, useEffect, useContext} from 'react';
+import {useNavigate} from 'react-router-dom'
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import UserMenu from "./UserMenu";
+import UserContext from '../../contexts/UserContext'
 
 export default function LoginFeature() {
     const [state, setState] = useState(1);
-
-
+    const { name } = useContext(UserContext);
+    const { surname } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
+    const { status} = useContext(UserContext);
+    const navigate = useNavigate()
+    useEffect(()=>{
+        console.log("hi fromsub")
+    })
     function RegisterForm(){
+
+        
+
         const [name, setName ] = useState("");
         const [surname, setSurname ] = useState("");
         const [email, setEmail ] = useState("");
@@ -17,11 +29,14 @@ export default function LoginFeature() {
         const [confirmpassword, setConfirmPassword ] = useState("");
         const [error, setError] = useState("");
         
+
         
+
         const gotoLoginHandler = async (e) => {
             e.preventDefault();
             setState(1);
         }
+        
         const registerHandler = async (e) => {
             e.preventDefault();
         
@@ -31,24 +46,32 @@ export default function LoginFeature() {
                 }
             }
             if (password !== confirmpassword){
-                setPassword("");
-                setConfirmPassword("");
-                setTimeout(() =>{
-                    setError("");
-                }, 5000);
-                return setError("Passwords do not match");
+                toast.error('Passwords do not match', {containerId: 'Register'})
+                
+            } else {
+                try {
+
+                    const {data} = await axios.post("/api/users/register", { name, surname, email, password}, config);
+                    localStorage.setItem("authToken",JSON.stringify( data.token));
+                    localStorage.setItem("status", JSON.stringify(true));
+                    localStorage.setItem("name", JSON.stringify(data.name))
+                    localStorage.setItem("id", JSON.stringify(data._id))
+                    localStorage.setItem("surname",JSON.stringify( data.surname))
+                    setUser(data.name, data.surname , true);
+                    navigate('/account')
+
+                    toast.success("Welcome "+ data.name, {containerId: 'Main'})
+                    setState(4)
+
+                } catch(error){
+                    console.log("hi")
+                    console.log(error)
+                    toast.error(error.response.data.message, {containerId: 'Register'})
+                }
+                
             }
         
-            try {
-                const {data} = await axios.post("/api/users/register", { name, surname, email, password}, config);
-                localStorage.setItem("authToken", data.token);
-                //history.push("/");
-            } catch(error){
-                setError(error.responses.data.error)
-                setTimeout(() =>{
-                    setError("");
-                }, 5000);
-            }
+
         }
     
       return (
@@ -112,25 +135,33 @@ export default function LoginFeature() {
             e.preventDefault();
             setState(3);
         }
+
+
         const loginHandler = async (e) => {
             e.preventDefault();
-        
+            
             const config = {
                 header: {
                     "Content-Type" :"application/json"
                 }
             }
 
-     
+
+
             try {
                 const {data} = await axios.post("/api/users/login", {  email, password}, config);
-                localStorage.setItem("authToken", data.token);
-                //history.push("/");
+                localStorage.setItem("authToken",JSON.stringify( data.token));
+                localStorage.setItem("status", JSON.stringify(true));
+                localStorage.setItem("id", JSON.stringify(data._id))
+                localStorage.setItem("name", JSON.stringify(data.name))
+                localStorage.setItem("surname",JSON.stringify( data.surname))
+                //window.location.reload(false);
+                navigate('/account')
+                toast.success("Welcome "+ data.name, {containerId: 'Main'})
+
             } catch(error){
-                setError(error.responses.data.error)
-                setTimeout(() =>{
-                    setError("");
-                }, 5000);
+                toast.error(error.response.data.message, {containerId: 'Login'})
+
             }
         }
     
@@ -163,6 +194,7 @@ export default function LoginFeature() {
       </div>
         )
     }
+
     
     function ForgetForm(){
         const [email, setEmail ] = useState("");
@@ -194,8 +226,10 @@ export default function LoginFeature() {
                 }, 5000);
             }
         }
-    
+
+
       return (
+       
         <div className="forget-screen">
         <form onSubmit={forgetHandler} className="forget-screen-form">
             <h3 className="forget-screen-title"> Forget password</h3> 
@@ -216,14 +250,31 @@ export default function LoginFeature() {
       </div>
         )
     }
-    
+    function Blank(){
+        return (<></>);
+    }
+
     switch(state){
         case 1:
-            return (<> <LoginForm/> </>)
+            return (<>  
+            <ToastContainer enableMultiContainer containerId={'Login'}  />
+            <LoginForm/>
+             </>)
         case 2:
-            return (<> <RegisterForm/> </>)
+            return (<> 
+            <ToastContainer enableMultiContainer containerId={'Register'}  />
+            <RegisterForm/> 
+            </>)
         case 3:
-            return ( <> <ForgetForm/> </>)
+            return ( <> 
+            <ToastContainer enableMultiContainer containerId={'Forget'}  />
+            <ForgetForm/> 
+            </>)
+        case 4:
+            return (
+                <><Blank/></>
+            )
+        
     }
     return (<> <LoginForm/> </>)
 

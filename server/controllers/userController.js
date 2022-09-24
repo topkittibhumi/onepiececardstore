@@ -19,8 +19,10 @@ export const registerUser = asyncHandler(async(req, res) => {
     const userExists = await User.findOne({email})
     
     if(userExists){
-        res.status(400)
-        throw new Error('User already exists')
+        res.status(400).json({
+            message : 'User already exists'
+        })
+        return
     }
 
     // Hash password
@@ -40,13 +42,16 @@ export const registerUser = asyncHandler(async(req, res) => {
         res.status(201).json({
             _id : user.id,
             name: user.name,
+            surname: user.surname,
             email: user.email,
             type: user.type,
             token: generateToken(user._id)
         })
     } else {
-        res.status(400)
-        throw new Error('Invalid user data')
+        res.status(400).json({
+            message : 'Something went wrong, please try again'
+        })
+        return
     }
 })
 
@@ -65,15 +70,16 @@ export const loginUser =asyncHandler(async (req, res) => {
         res.status(201).json({
             _id : user._id,
             name: user.name,
+            surname:user.surname,
             email: user.email,
             type: user.type,
             token: generateToken(user._id)
         })
     } else {
-        res.status(400)
-        throw new Error('Invalid credentials')
+        res.status(400).json({
+            message : 'Password not match or Account not exist'
+        })
     }
-    res.json({messge: 'Login User'})
 })
 
 

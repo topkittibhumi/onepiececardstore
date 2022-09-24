@@ -6,23 +6,75 @@ import Cart from './icon/cart.svg';
 import Close from './icon/xmark.svg';
 import User from './icon/user.svg';
 import MagnifyingGlass from './icon/magnifying-glass.svg';
-import {useState} from 'react';
+import {useEffect, useState, useRef, useContext} from 'react';
 import LoginFeature  from "../../../features/login/LoginFeature"
+import UserMenu  from "../../../features/login/UserMenu.js"
+import UserContext from '../../../contexts/UserContext'
+
+import {useNavigate} from 'react-router-dom'
 
 
 
+let useClickOutside = (handler)=> {
+    let domNode = useRef();
+
+    useEffect(()=> {
+        let maybeHandler = (event)=>{
+            if (!domNode.current?.contains(event.target)){
+                handler();
+            }
+        };
+        document.addEventListener("mousedown", maybeHandler);
+        return () =>{
+            document.removeEventListener("mousedown", maybeHandler);
+        };
+    });
+    return domNode;
+
+};
 export default function SearchBar() {
 
+
+    const [name, setName] = useState(JSON.parse(localStorage.getItem('name')))
+    const [active, setActive] = useState(JSON.parse(localStorage.getItem('status')))
+
+    useEffect(()=>{
+        const name = JSON.parse(localStorage.getItem('name'))
+        const active = JSON.parse(localStorage.getItem('status'))
+        if (name){
+            setName(name);
+            setActive(active)
+        }
+    }, []);
+    const navigate = useNavigate()
     const [state, setState ] = useState(false)
+    const [count, setCount] = useState(0)
     const accountClickHandler = async (e) => {
         e.preventDefault();
-        setState(!state);
-
+        console.log("hi")
+        console.log(state)
+  
+            if (count<1){
+                setState(!state);
+                setCount(1);
+            } else{
+                setCount(0);
+            }
+ 
     }
+    let domNode = useClickOutside (()=>{
+        if (state){
+            setState(false);
+            setCount(prevCount =>prevCount +1);    
+        }
+        setCount(prevCount =>prevCount -1);
+    })
 
+
+  
   return (
     <>
-    {state && <LoginFeature/>}
+    {state &&  <div ref={domNode} >{ active ? <UserMenu/>: <LoginFeature/>} </div>}
     
     <div class="search-container">
 
@@ -71,7 +123,7 @@ export default function SearchBar() {
                     <img src={User} alt="" width="30" />
                     </div>
                     <div className="account-text">
-                        Account
+                        { active ? name : "Account" }
                       </div>
 
                 </Link>

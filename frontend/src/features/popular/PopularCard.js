@@ -27,6 +27,8 @@ export default function SingleCard() {
         </div>
         <div className='popular-product-single-detail-container'>
             <p>{product.name}</p>
+            <p>{ product.cheapest_seller.price <999999? "$"+product.cheapest_seller.price : "Not available"}</p>
+
         </div>
         </div>
 ))}
@@ -34,4 +36,3 @@ export default function SingleCard() {
         
     </>)
   }
-

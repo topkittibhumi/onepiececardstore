@@ -14,7 +14,7 @@ export function ProductProvider({ children }){
             console.log("PLEASE NO SEE")
             const getPopularCard = async () =>{
                 const res = await axios.get('http://localhost:5001/api/products/popular/card?')
-                setPopularCard(res.data)
+                setPopularCard(res.data.products)
             }
             console.log("hihihi214")
             getPopularCard()

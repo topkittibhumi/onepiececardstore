@@ -20,12 +20,9 @@ export default function SearchBar() {
         setSearch('')
     }
 
-  
-  return (
-    <>
-        
-            <div className="category-container">
-                <select name="category" value={category} onChange={handleCategory} >
+  /* cate code
+     <div className="category-container">
+                  <select name="category" value={category} onChange={handleCategory} >
                     <option value=''>Category</option>
                     {
                         categories.map(category => (
@@ -35,7 +32,12 @@ export default function SearchBar() {
                         ))
                     }
                 </select>
-            </div>
+                  </div>
+  */
+  return (
+    <>
+        
+
         
                 <input className="searchbar-container" type="text"  value={search} placeholder="Enter your search!"
                 onChange={e => setSearch(e.target.value)} />

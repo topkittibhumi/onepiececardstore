@@ -1,14 +1,24 @@
 import Header from '../components/header/Header'
 import data from '../data'
 import PopularCard from '../features/popular/PopularCard'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, Link} from 'react-router-dom'
 import axios from "axios";
 import './product-styles.css'
+import CartItem from '../features/cart/CartItem'
+import CartContext from '../contexts/CartContext'
 export default function ProductDetail() {
     const params = useParams()
     const [product,setProduct] = useState([])
     const [state,setState] = useState(false)
+    const cart = useContext(CartContext)
+    const  [quantitySelection, setQuantitySelection] = useState([])
+    const [selected, setSelected] = useState(1);
+
+    function handleChange (value)  {
+
+        setSelected(value);
+      };
     useEffect(()=>{
         const config = {
             header: {
@@ -23,20 +33,32 @@ export default function ProductDetail() {
                 const data = await axios.get("http://localhost:5001/api/products/product?id="+params.id , config);
     
                 setProduct(data.data.data)
-                setState(true)
+               
                 console.log(data)
+                let n = []
+                for (let i = 0; i < data.data.data[0].cheapest_seller.stock; i++){
+                    n.push( i+1)
+                }
+                console.log(quantitySelection)
+                setQuantitySelection(n)
+                setState(true)
             } catch(error){
     
                 console.log("error occur");
             }
         }
         fetchProduct()
-        console.log("here")
-        console.log(product)
+
 
     },[params.id])
     console.log(product)
     console.log("done")
+
+    function addToCart(id, user_id){
+
+        cart.updateCart(id,user_id,selected)
+    }
+    
 
     return (<>
     <Header />
@@ -51,6 +73,7 @@ export default function ProductDetail() {
         </div>
         <div className='item-right-container'>
             <h1  > {product[0].name}</h1>
+        
             {product[0].sellers.length >0 
 
                 ? 
@@ -58,9 +81,16 @@ export default function ProductDetail() {
                     <span className="item-price"> ${product[0].cheapest_seller.price} </span>
                     <span className="item-seller"> Sold by  <span className="sold-by-seller">{product[0].cheapest_seller.user.store}</span> </span>
                     <div className='stock-price-row'>
+            
                         <div className='stock-row'>
                             <div className='order-amount'>
-                            1
+                              
+                            <select className='quantity-option' value={selected}  onChange={(e)=>setSelected(e.target.value)} >
+                                {  quantitySelection.map((element)=>(
+                                    <option > {element}</option>
+                                )) }
+                            </select>
+                            
                             </div>
     
                             
@@ -69,7 +99,7 @@ export default function ProductDetail() {
                             </div>
                         </div>
                         <div className='cart-btn'>
-                            <button> Add to cart</button>
+                            <button onClick={ ()=>addToCart( product[0]._id , product[0].cheapest_seller.user._id)}> Add to cart</button>
                         </div>
                     </div>
 
@@ -103,7 +133,11 @@ You can only use 1 "Arianna the Labrynth Servant" effect per turn, and only once
         <div className='item-bottom-container'>
 
         </div>
+        <CartItem  product_id ={product[0]._id} seller_id={product[0].cheapest_seller.user._id}/>
     </div>
+    
+
+    
     : <h1> Loading </h1>}
 
 

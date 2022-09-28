@@ -12,7 +12,7 @@ import UserMenu  from "../../../features/login/UserMenu.js"
 import SearchBar from "./Searchbar";
 import ShowSearch from "./ShowSearch";
 import {useNavigate, useParams} from 'react-router-dom'
-
+import CartContext from "../../../contexts/CartContext"
 
 let useClickOutside = (handler)=> {
     let domNode = useRef();
@@ -44,6 +44,7 @@ export default function TopNav() {
     const [state2, setState2 ] = useState(false)
     const [count, setCount] = useState(0)
     const params = useParams()
+    const cart = useContext(CartContext)
 
     const accountClickHandler = async (e) => {
         e.preventDefault();
@@ -103,7 +104,7 @@ export default function TopNav() {
         <div id="search-feature-container" onClick={searchClickHandler}>  <SearchBar onClick={searchClickHandler}/></div>
         <div className="right-icon">
             <div className="cart-icon-container">
-                <span>0</span>
+                <span>{ cart.cartQuantity}</span>
                 <Link className="cart-container">
                     <div >
                         <img src={Cart} alt="" width="35s " />

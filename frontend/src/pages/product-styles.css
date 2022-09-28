@@ -87,9 +87,19 @@
     border-right: grey solid 1px;
     width :70px;
     text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+
+    
 }
+.stock-row .order-amount select{
+    border:none;
+    height: 100%;
+    width:100%;
+    text-align:center;
+    -webkit-appearance: none;
+
+}
+
+
 .stock-row .stock-amount{
     text-align: center;
     padding-top: 10px;

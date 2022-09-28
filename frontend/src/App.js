@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ProductProvider } from './contexts/ProductContext'
+import { CartProvider } from "./contexts/CartContext";
 import "./styles.css"
 
 
@@ -20,6 +21,7 @@ function App() {
     <>
       <div className="container2">
         <ProductProvider>
+        <CartProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/single" element={<SingleCard />} />
@@ -29,6 +31,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/product/:id" element={<ProductDetail/>}/>
         </Routes>
+        </CartProvider>
         </ProductProvider>
         <ToastContainer enableMultiContainer containerId={'Main'} position={toast.POSITION.BOTTOM_LEFT} />
       </div>   

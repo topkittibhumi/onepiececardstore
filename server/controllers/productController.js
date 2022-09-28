@@ -56,17 +56,101 @@ class APIfeatures {
 
 
 export const getPopularCard = asyncHandler(async(req, res) => {
+  try{
+      const ObjectId = mongoose.Types.ObjectId;
+      const pipeline = [
+          {
+            '$lookup': {
+              'from': 'users', 
+              'localField': 'sellers.user', 
+              'foreignField': '_id', 
+              'as': 'related'
+            }
+          }, {
+            '$project': {
+              'sellers': {
+                '$map': {
+                  'input': '$sellers', 
+                  'in': {
+                    'user': {
+                      '$arrayElemAt': [
+                        '$related', {
+                          '$indexOfArray': [
+                            '$related._id', '$$this.user'
+                          ]
+                        }
+                      ]
+                    }, 
+                    'price': '$$this.price', 
+                    'stock': '$$this.stock'
+                  }
+                }
+              }, 
+              'name': '$name', 
+              'category': '$category', 
+              'image': '$image', 
+              'brand': '$brand', 
+              'popular_card': '$popular_card', 
+              'popular_product': '$popular_product', 
+              'checked': '$checked', 
+              'slug': '$slug'
+            }
+          }, {
+            '$match': {
+              'popular_card': {
+                '$gte': 1
+              }
+            }
+          }, {
+            '$sort': {
+              'popular_card': 1
+            }
+          }, {
+            '$unset': [
+              'sellers.user.resetPasswordExpire', 'sellers.user.resetPasswordToken', 'sellers.user.password'
+            ]
+          }, {
+            '$addFields': {
+              'cheapest_seller': {
+                '$reduce': {
+                  'input': '$sellers', 
+                  'initialValue': {
+                    'price': 99999999
+                  }, 
+                  'in': {
+                    '$cond': [
+                      {
+                        '$lte': [
+                          '$$this.price', '$$value.price'
+                        ]
+                      }, '$$this', '$$value'
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ];
 
-    const popularCard = await Product.find({ popular_card: {$gt:0}}).sort({popular_card:1})
-    
-    if(popularCard){
-        res.status(201).json(popularCard);
-        console.log("success")
-        return
-    } else {
-        res.status(400).json({
-            message : 'Unable to get card'
-        })
+        const popular_card = await Product.aggregate(pipeline)
+        console.log( "begin " )
+        console.log( popular_card)
+        console.log( "end ")
+        if(popular_card){
+
+      
+            res.status(200).json({ sucess: true, result: popular_card.length,products: popular_card})
+
+        }
+        else{
+            res.status(400).json({
+                message : 'product not found'
+            })
+            
+        }
+        
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
     }
 
 })
@@ -112,7 +196,7 @@ export const getProductSearch = asyncHandler(async(req,res)=>{
                         '$arrayElemAt': [
                           '$related', {
                             '$indexOfArray': [
-                              '$related._id', '$$this.id'
+                              '$related._id', '$$this.user'
                             ]
                           }
                         ]
@@ -191,7 +275,6 @@ export const getProduct = asyncHandler(async(req,res) => {
     
 
         const ObjectId = mongoose.Types.ObjectId;
-        console.log(req.query)
         const pipeline = [
             {
               '$lookup': {
@@ -210,7 +293,7 @@ export const getProduct = asyncHandler(async(req,res) => {
                         '$arrayElemAt': [
                           '$related', {
                             '$indexOfArray': [
-                              '$related._id', '$$this.id'
+                              '$related._id', '$$this.user'
                             ]
                           }
                         ]
@@ -279,4 +362,57 @@ export const getProduct = asyncHandler(async(req,res) => {
         return res.status(500).json({msg: err.message})
     }
     return;
+})
+
+export const getProductSellerInfo = asyncHandler(async(req,res) => {
+  try {
+    
+
+      const ObjectId = mongoose.Types.ObjectId;
+      
+      console.log(req.query.product)
+      console.log(req.query.user)
+      const pipeline = [
+        {
+          '$unwind': {
+            'path': '$sellers', 
+            'includeArrayIndex': 'string'
+          }
+        }, {
+          '$match': {
+            '_id' : ObjectId(req.query.product),
+            'sellers.user' :ObjectId(req.query.user)
+          }
+        }, {
+          '$lookup': {
+            'from': 'users', 
+            'localField': 'sellers.user', 
+            'foreignField': '_id', 
+            'as': 'seller_info'
+          }
+        }, {
+          '$unset': [
+            'seller_info.resetPasswordExpire', 'seller_info.resetPasswordToken', 'seller_info.password'
+          ]
+        }
+      ];
+      const product = await Product.aggregate(pipeline)
+      console.log( "begin " )
+      console.log( product)
+      console.log( "end ")
+      if(product){
+          res.status(200).json({ sucess: true, data: product})
+
+      }
+      else{
+          res.status(400).json({
+              message : 'product not found'
+          })
+          
+      }
+      
+  } catch (err) {
+      return res.status(500).json({msg: err.message})
+  }
+  return;
 })

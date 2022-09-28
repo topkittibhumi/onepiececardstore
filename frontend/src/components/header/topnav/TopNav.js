@@ -82,14 +82,17 @@ export default function TopNav() {
     useEffect(() =>{
         setState2(false)
     },[params.id])
-
+    
+    function clickHandler(){
+        setState2(false)
+    }
 
   
   return (
     <>
       {state &&  <div ref={domNode} >{ active ? <UserMenu/>: <LoginFeature/>} </div>}
     
-      {state2 &&  <div ref={domNode2} >  <ShowSearch/> </div>}
+      {state2 &&  <div ref={domNode2} onClick={()=>clickHandler()} >  <ShowSearch/> </div>}
     <div class="search-container">
 
         <div class="logo"> 

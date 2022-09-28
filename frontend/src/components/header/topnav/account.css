@@ -1,0 +1,12 @@
+.account-container{
+    display: flex;
+    text-decoration: none;
+}
+
+.account-container .account-text{
+    color:black;
+    position:relative;
+    right:-2px;
+    font-size:18px;
+    top:17px
+}

@@ -1,10 +1,12 @@
 import Navbar from "./nav/Navbar";
-import Searchbar from "./search/Searchbar";
+import TopNav from "./topnav/TopNav";
+import SearchBar from "./topnav/Searchbar";
 
 export default function Header() {
     return (
     <>
-        <Searchbar/>
+
+        <TopNav/>
         <Navbar/>
       </>
     )

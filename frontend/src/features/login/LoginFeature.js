@@ -6,14 +6,11 @@ import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import UserMenu from "./UserMenu";
-import UserContext from '../../contexts/UserContext'
+
 
 export default function LoginFeature() {
     const [state, setState] = useState(1);
-    const { name } = useContext(UserContext);
-    const { surname } = useContext(UserContext);
-    const { setUser } = useContext(UserContext);
-    const { status} = useContext(UserContext);
+   
     const navigate = useNavigate()
     useEffect(()=>{
         console.log("hi fromsub")
@@ -57,7 +54,7 @@ export default function LoginFeature() {
                     localStorage.setItem("name", JSON.stringify(data.name))
                     localStorage.setItem("id", JSON.stringify(data._id))
                     localStorage.setItem("surname",JSON.stringify( data.surname))
-                    setUser(data.name, data.surname , true);
+          
                     navigate('/account')
 
                     toast.success("Welcome "+ data.name, {containerId: 'Main'})
@@ -75,6 +72,7 @@ export default function LoginFeature() {
         }
     
       return (
+        <div className="login-container">
         <div className="register-screen">
         <form onSubmit={registerHandler} className="register-screen-form">
             <h3 className="register-screen-title"> Register</h3> 
@@ -118,6 +116,7 @@ export default function LoginFeature() {
           <span className="register-subtext"> Already have an account? <div className="goto-login" onClick={gotoLoginHandler}>Login</div></span>
     
         </form>
+      </div>
       </div>
         )
     }
@@ -166,6 +165,7 @@ export default function LoginFeature() {
         }
     
       return (
+        <div className="login-container">
         <div className="login-screen">
         <form onSubmit={loginHandler} className="login-screen-form">
             <h3 className="login-screen-title"> Login</h3> 
@@ -192,6 +192,7 @@ export default function LoginFeature() {
           <span className="forget-subtext"> Lost password? <div className="goto-forget" onClick={gotoForgetPasswordHandler}>Recover password</div></span>
         </form>
       </div>
+      </div>
         )
     }
 
@@ -216,20 +217,19 @@ export default function LoginFeature() {
 
      
             try {
-                const {data} = await axios.post("/api/users/forget", {  email}, config);
-                localStorage.setItem("authToken", data.token);
-                //history.push("/");
+                const {data} = await axios.post("http://localhost:5001/api/users/forgetpassword", {  email}, config);
+                navigate('/login')
+                toast.success("We have sent you an email with instructions to reset your password.", {containerId: 'Main'})
+    
             } catch(error){
-                setError(error.responses.data.error)
-                setTimeout(() =>{
-                    setError("");
-                }, 5000);
+  
+                toast.error(error.response.data.message, {containerId: 'Forget'})
             }
         }
 
 
       return (
-       
+        <div className="login-container">
         <div className="forget-screen">
         <form onSubmit={forgetHandler} className="forget-screen-form">
             <h3 className="forget-screen-title"> Forget password</h3> 
@@ -247,6 +247,7 @@ export default function LoginFeature() {
           <button type="submit" className="btn btn-primary"> Recover </button>
           <span className="login-subtext"> Remember your account? <div className="goto-register" onClick={gotoLoginHandler}>Login</div></span>
         </form>
+      </div>
       </div>
         )
     }

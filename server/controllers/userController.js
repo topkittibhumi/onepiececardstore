@@ -11,11 +11,13 @@ import crypto from 'crypto';
 
 export const registerUser = asyncHandler(async(req, res) => {
     const { name,surname, email, password,} = req.body
+
     if(!name || !email || !password || !surname ){
         res.status(400)
         throw new Error('Please add all fields')
     }
     // Check if user exists
+    console.log({email})
     const userExists = await User.findOne({email})
     
     if(userExists){
@@ -128,17 +130,20 @@ export const forgetPassword = asyncHandler(async(req,res) =>{
 
                 await user.save();
 
-                res.status(400)
-                throw new Error('Email count not be send') 
+                res.status(400).json({
+                    message : 'Email could not be sent, please try again later'
+                })
             }
 
         } else{
-            res.status(400)
-            throw new Error("Email could not be sent")
+            res.status(400).json({
+                message : 'Email could not be sent, please check your input email.'
+            })
         }
     } catch(error){
-        res.status(400)
-        throw new Error("Something went wrong")
+        res.status(400).json({
+            message : 'Something went wrong'
+        })
     }
 })
 

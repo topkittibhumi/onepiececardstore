@@ -1,5 +1,7 @@
 import express from 'express';
 import Product from '../models/productModel.js';
+import { getPopularCard ,getProductSearch,getProduct} from '../controllers/productController.js'
+
 const productRouter = express.Router();
 
 productRouter.get('/', async(req,res) =>{
@@ -14,14 +16,11 @@ productRouter.get('/slug/:slug', async(req,res)=>{
         res.status(404).send({message: 'Product Not Found!'});
     }
 });
-productRouter.get('/:id', async(req,res)=>{
-    const product= await Product.findById(  req.params.id);
-    if (product){
-        res.send(product);
-    } else{
-        res.status(404).send({message: 'Product Not Found!'});
-    }
-});
+
+
+productRouter.get('/popular/card', getPopularCard)
+productRouter.get('/products', getProductSearch)
+productRouter.get('/product',getProduct)
 
 
 export default productRouter;

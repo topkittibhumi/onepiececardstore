@@ -7,11 +7,18 @@ const productSchema =  new mongoose.Schema(
         image: {type: String, required: true},
         brand: { type: String, required: true },
         category: { type: String, required: true},
-        description: {type: String, required: true},
-        price : {  type: Number, required: true},
-        stock: {type: Number, required: true},
-        user: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'}
-
+        card_box: {type: String},
+        description: {type: String},
+        popular_card: {type: Number},
+        popular_product: {type: Number},
+        checked: {type: Boolean, default: false},
+        sellers: [
+            {
+                user : { type: mongoose.Schema.Types.ObjectId,  ref: 'User'},
+                price :{ type: Number, required: true},
+                stock : { type: Number, required: true}
+            }
+        ],
     }, 
     {
         timestamps: true

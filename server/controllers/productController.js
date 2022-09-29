@@ -20,16 +20,16 @@ class APIfeatures {
        excludedFields.forEach(el => delete(queryObj[el]))
        
        let queryStr = JSON.stringify(queryObj)
-       console.log(queryStr)
+
        queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex|options)\b/g, match => '$' + match)
   
     //    gte = greater than or equal
     //    lte = lesser than or equal
     //    lt = lesser than
     //    gt = greater than
-    console.log(queryStr)
+
        this.query.find(JSON.parse(queryStr))
-       console.log(this)
+
          
        return this;
     }
@@ -133,9 +133,7 @@ export const getPopularCard = asyncHandler(async(req, res) => {
         ];
 
         const popular_card = await Product.aggregate(pipeline)
-        console.log( "begin " )
-        console.log( popular_card)
-        console.log( "end ")
+
         if(popular_card){
 
       
@@ -176,7 +174,7 @@ export const getProducts = asyncHandler(async(req,res) => {
 
 export const getProductSearch = asyncHandler(async(req,res)=>{
     try{
-        console.log(req.query.regex)
+
         const ObjectId = mongoose.Types.ObjectId;
         const pipeline = [
             {
@@ -249,9 +247,7 @@ export const getProductSearch = asyncHandler(async(req,res)=>{
           ];
 
           const product = await Product.aggregate(pipeline)
-          console.log( "begin " )
-          console.log( product)
-          console.log( "end ")
+   
           if(product){
 
         
@@ -344,9 +340,7 @@ export const getProduct = asyncHandler(async(req,res) => {
           ];
           
         const product = await Product.aggregate(pipeline)
-        console.log( "begin " )
-        console.log( product)
-        console.log( "end ")
+   
         if(product){
             res.status(200).json({ sucess: true, data: product})
 
@@ -370,8 +364,7 @@ export const getProductSellerInfo = asyncHandler(async(req,res) => {
 
       const ObjectId = mongoose.Types.ObjectId;
       
-      console.log(req.query.product)
-      console.log(req.query.user)
+     
       const pipeline = [
         {
           '$unwind': {
@@ -397,9 +390,7 @@ export const getProductSellerInfo = asyncHandler(async(req,res) => {
         }
       ];
       const product = await Product.aggregate(pipeline)
-      console.log( "begin " )
-      console.log( product)
-      console.log( "end ")
+
       if(product){
           res.status(200).json({ sucess: true, data: product})
 
@@ -416,3 +407,51 @@ export const getProductSellerInfo = asyncHandler(async(req,res) => {
   }
   return;
 })
+  export const getCartTotal = asyncHandler(async(req,res) => {
+
+    const ObjectId = mongoose.Types.ObjectId;
+    const re=  req.body
+    console.log(re.cart.length)
+    var total = 0
+    for ( var i=0; i < re.cart.length; i++){
+      const pipeline = [
+        {
+          '$unwind': {
+            'path': '$sellers', 
+            'includeArrayIndex': 'string'
+          }
+        }, {
+          '$match': {
+            '_id': (new ObjectId(re.cart[i].id)), 
+            'sellers.user': (new ObjectId(re.cart[i].user_id))
+          }
+        }, {
+          '$project': {
+            'price': {
+              '$multiply': [
+                '$sellers.price',  parseInt(re.cart[i].quantity)
+              ]
+            }
+          }
+        }
+      ];
+      
+      try{
+        const ret = await Product.aggregate(pipeline)
+        console.log(ret)
+        total += ret[0].price
+      } catch(err){
+        return res.status(500).json({msg: err.message})
+      }
+    }
+
+    try{
+      res.status(200).json({ sucess: true, data: total})
+      console.log("sucesss")
+    } catch (err) {
+      return res.status(500).json({msg: err.message})
+  }
+  
+
+  })
+

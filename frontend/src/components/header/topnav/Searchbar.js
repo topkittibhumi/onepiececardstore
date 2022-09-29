@@ -4,13 +4,17 @@ import MagnifyingGlass from './icon/magnifying-glass.svg';
 import './search_styles.css'
 import ShowSearch from './ShowSearch';
 export default function SearchBar() {
-    console.log("Zzzzzzz")
+  
+    
     const state = useContext(ProductContext)
-    console.log("Zzzzzzz2")
+
+    
     const [categories] = state.state.categoriesAPI.categories
-    console.log("Zzzzzzz3")
+
+    
     const [category, setCategory] = state.state.productsAPI.category
-    console.log("Zzzzzzz4")
+ 
+    
     const [sort, setSort] = state.state.productsAPI.sort
     const [search, setSearch] = state.state.productsAPI.search
 

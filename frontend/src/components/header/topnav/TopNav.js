@@ -3,7 +3,6 @@ import "./styles.css"
 import { BiCartAlt, BiUser } from 'react-icons/bi';
 import Menu from './icon/bars.svg';
 import Cart from './icon/cart.svg';
-import Close from './icon/xmark.svg';
 import User from './icon/user.svg';
 import MagnifyingGlass from './icon/magnifying-glass.svg';
 import {useEffect, useState, useRef, useContext} from 'react';
@@ -48,8 +47,7 @@ export default function TopNav() {
 
     const accountClickHandler = async (e) => {
         e.preventDefault();
-        console.log("hi")
-        console.log(state)
+
   
             if (count<1){
                 setState(!state);
@@ -68,7 +66,8 @@ export default function TopNav() {
  
     }
     let domNode2 = useClickOutside (()=>{
-        console.log("kuy")
+   
+        
         if (state2){
             setState2(false);
         }
@@ -87,6 +86,13 @@ export default function TopNav() {
     function clickHandler(){
         setState2(false)
     }
+    function cartClickHandler(){
+        cart.load();
+        cart.openCart();
+    }
+    useEffect(()=>{
+        ;
+    },[cart.cart])
 
   
   return (
@@ -103,7 +109,7 @@ export default function TopNav() {
         </div>
         <div id="search-feature-container" onClick={searchClickHandler}>  <SearchBar onClick={searchClickHandler}/></div>
         <div className="right-icon">
-            <div className="cart-icon-container">
+            <div className="cart-icon-container" onClick={()=> cartClickHandler()}>
                 <span>{ cart.cartQuantity}</span>
                 <Link className="cart-container">
                     <div >

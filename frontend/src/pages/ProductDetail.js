@@ -7,6 +7,7 @@ import axios from "axios";
 import './product-styles.css'
 import CartItem from '../features/cart/CartItem'
 import CartContext from '../contexts/CartContext'
+import Cart from '../features/cart/Cart'
 export default function ProductDetail() {
     const params = useParams()
     const [product,setProduct] = useState([])
@@ -34,12 +35,14 @@ export default function ProductDetail() {
     
                 setProduct(data.data.data)
                
-                console.log(data)
+              
+                
                 let n = []
                 for (let i = 0; i < data.data.data[0].cheapest_seller.stock; i++){
                     n.push( i+1)
                 }
-                console.log(quantitySelection)
+               
+                
                 setQuantitySelection(n)
                 setState(true)
             } catch(error){
@@ -51,12 +54,13 @@ export default function ProductDetail() {
 
 
     },[params.id])
-    console.log(product)
-    console.log("done")
+
+    
 
     function addToCart(id, user_id){
-
+        console.log(selected)
         cart.updateCart(id,user_id,selected)
+        cart.openCart()
     }
     
 
@@ -133,7 +137,6 @@ You can only use 1 "Arianna the Labrynth Servant" effect per turn, and only once
         <div className='item-bottom-container'>
 
         </div>
-        <CartItem  product_id ={product[0]._id} seller_id={product[0].cheapest_seller.user._id}/>
     </div>
     
 
@@ -143,3 +146,5 @@ You can only use 1 "Arianna the Labrynth Servant" effect per turn, and only once
 
     </>)
   }
+
+  //        <CartItem  product_id ={product[0]._id} seller_id={product[0].cheapest_seller.user._id}/>

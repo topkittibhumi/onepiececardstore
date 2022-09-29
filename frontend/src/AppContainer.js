@@ -13,22 +13,27 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ProductProvider } from './contexts/ProductContext'
 import CartContext, { CartProvider } from "./contexts/CartContext";
 import "./styles.css"
-import AppContainer from "./AppContainer";
-function App() {
+
+function AppContainer() {
+  const cart = useContext(CartContext);
+  
   return (
     <>
-      <div className="container2" >
-      
-        <ProductProvider>
-        <CartProvider>
-         <AppContainer/>     
-        </CartProvider>
-        </ProductProvider>
-   
-        <ToastContainer enableMultiContainer containerId={'Main'} position={toast.POSITION.BOTTOM_LEFT} />
-      </div>   
+       <div style={{ pointerEvents: cart.isOpen ? 'none': 'auto' }}>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/single" element={<SingleCard />} />
+          <Route path="/graded" element={<GradedCard />} />
+          <Route path="/sell" element={<Sell />} />
+          <Route path="/account" element={<Account />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/product/:id" element={<ProductDetail/>}/>
+        </Routes>
+     
+    </div>
     </>
   )
 }
 
-export default App
+export default AppContainer

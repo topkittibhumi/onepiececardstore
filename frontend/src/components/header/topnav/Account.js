@@ -38,8 +38,8 @@ export default function Account() {
     const [count, setCount] = useState(0)
     const accountClickHandler = async (e) => {
         e.preventDefault();
-        console.log("hi")
-        console.log(state)
+   
+        
   
             if (count<1){
                 setState(!state);

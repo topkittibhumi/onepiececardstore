@@ -1,6 +1,9 @@
 .container2 {
     margin: auto;
     max-width:  1240px;
-    
     background-color: white;
+}
+body {
+    margin: 0;
+    padding: 0;
 }

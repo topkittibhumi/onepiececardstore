@@ -31,7 +31,7 @@ export default function ProductDetail() {
 
                 const id = params.id
     
-                const data = await axios.get("http://localhost:5001/api/products/product?id="+params.id , config);
+                const data = await axios.get("/api/products/product?id="+params.id , config);
     
                 setProduct(data.data.data)
                

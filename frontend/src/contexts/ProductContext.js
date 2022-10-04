@@ -13,7 +13,7 @@ export function ProductProvider({ children }){
     useEffect(() =>{
             console.log("PLEASE NO SEE")
             const getPopularCard = async () =>{
-                const res = await axios.get('http://localhost:5001/api/products/popular/card?')
+                const res = await axios.get('/api/products/popular/card?')
                 setPopularCard(res.data.products)
             }
             getPopularCard()

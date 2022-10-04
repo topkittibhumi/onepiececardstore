@@ -29,7 +29,7 @@ export default function CartItem( {product_id, seller_id, quantity}) {
      
                 const id = params.id
     
-                const data = await axios.get("http://localhost:5001/api/products/product/user?user="+sid +"&product="+pid, config);
+                const data = await axios.get("/api/products/product/user?user="+sid +"&product="+pid, config);
     
                 setProduct(data.data.data)
 

@@ -104,7 +104,7 @@ export function CartProvider({ children }){
         }
         const getPrice = async () =>{
             try{
-                const res = await axios.post('http://localhost:5001/api/products/price', { cart}, config);
+                const res = await axios.post('/api/products/price', { cart}, config);
                 setTotalPrice(res.data.data)
             }
             catch{

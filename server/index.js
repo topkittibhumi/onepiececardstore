@@ -11,6 +11,9 @@ import Sib from 'sib-api-v3-sdk';
 const app = express();
 dotenv.config();
 
+import  Stripe from 'stripe'
+const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY);
+
 app.use('/posts', postRoutes);
 
 app.use(bodyParser.json({limit: "30mb", extended: true}));

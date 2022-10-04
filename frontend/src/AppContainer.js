@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ProductProvider } from './contexts/ProductContext'
 import CartContext, { CartProvider } from "./contexts/CartContext";
 import "./styles.css"
-
+import Checkout from "./pages/Checkout";
 function AppContainer() {
   const cart = useContext(CartContext);
   
@@ -29,6 +29,7 @@ function AppContainer() {
           <Route path="/account" element={<Account />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/product/:id" element={<ProductDetail/>}/>
+          <Route path="/checkout" element={<Checkout />}/>
         </Routes>
      
     </div>

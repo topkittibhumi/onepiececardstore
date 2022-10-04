@@ -31,7 +31,7 @@ const client = Sib.ApiClient.instance
 const apiKey = client.authentications['api-key']
 apiKey.apiKey = process.env.API_KEY
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);

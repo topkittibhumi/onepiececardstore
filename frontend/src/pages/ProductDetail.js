@@ -8,6 +8,7 @@ import './product-styles.css'
 import CartItem from '../features/cart/CartItem'
 import CartContext from '../contexts/CartContext'
 import Cart from '../features/cart/Cart'
+import ProgressBar from '../components/progressbar/Progressbar'
 export default function ProductDetail() {
     const params = useParams()
     const [product,setProduct] = useState([])
@@ -65,6 +66,7 @@ export default function ProductDetail() {
     
 
     return (<>
+    
     <Header />
     {state ?     
     <div className='item-container'>
@@ -139,9 +141,10 @@ You can only use 1 "Arianna the Labrynth Servant" effect per turn, and only once
         </div>
     </div>
     
+    
 
     
-    : <h1> Loading </h1>}
+    : <> <ProgressBar /> </>}
 
 
     </>)

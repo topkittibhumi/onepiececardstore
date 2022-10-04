@@ -3,7 +3,7 @@ import { useParams, Link} from 'react-router-dom'
 import CartContext from '../../contexts/CartContext'
 import './cart_item_styles.css'
 import axios from 'axios'
-import ProgressBar from '../../components/progressbar/Progressbar'
+import CartItemProgressBar from '../../components/progressbar/CartItemProgressBar'
 export default function CartItem( {product_id, seller_id, quantity}) {
 
     const params = useParams()
@@ -109,6 +109,6 @@ export default function CartItem( {product_id, seller_id, quantity}) {
                 ${product[0].sellers.price}
             </div>
         </div>
-        : <><ProgressBar/></>}
+        : <><CartItemProgressBar/></>}
     </>)
   }

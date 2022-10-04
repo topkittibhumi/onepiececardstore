@@ -11,6 +11,12 @@
     left:50%;
     top:50%;
 
+    
+}
+
+.progress-bar2-container{
+    width: auto;
+    height:170px;
 }
 .progress-bar2{
     position :relative;

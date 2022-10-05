@@ -196,7 +196,9 @@
     .item-left-container img{
         width: auto;
         height:auto;
-        max-height: 600px;
+        max-height: 200px;
+        max-width:1600px;
+
     }
     
     .item-top-container  .item-right-container{

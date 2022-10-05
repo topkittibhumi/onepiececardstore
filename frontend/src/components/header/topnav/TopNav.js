@@ -9,7 +9,7 @@ import {useEffect, useState, useRef, useContext} from 'react';
 import LoginFeature  from "../../../features/login/LoginFeature"
 import UserMenu  from "../../../features/login/UserMenu.js"
 import SearchBar from "./Searchbar";
-import ShowSearch from "./ShowSearch";
+
 import {useNavigate, useParams} from 'react-router-dom'
 import CartContext from "../../../contexts/CartContext"
 
@@ -40,7 +40,6 @@ export default function TopNav() {
     
     const navigate = useNavigate()
     const [state, setState ] = useState(false)
-    const [state2, setState2 ] = useState(false)
     const [count, setCount] = useState(0)
     const params = useParams()
     const cart = useContext(CartContext)
@@ -58,20 +57,8 @@ export default function TopNav() {
  
     }
 
-    const searchClickHandler = async (e) => {
-        e.preventDefault();
   
-        setState2(true);
-    
- 
-    }
-    let domNode2 = useClickOutside (()=>{
-   
-        
-        if (state2){
-            setState2(false);
-        }
-    })
+
     let domNode = useClickOutside (()=>{
         if (state){
             setState(false);
@@ -79,13 +66,9 @@ export default function TopNav() {
         }
         setCount(prevCount =>prevCount -1);
     })
-    useEffect(() =>{
-        setState2(false)
-    },[params.id])
+
     
-    function clickHandler(){
-        setState2(false)
-    }
+
     function cartClickHandler(){
         cart.load();
         cart.openCart();
@@ -94,12 +77,10 @@ export default function TopNav() {
         ;
     },[cart.cart])
 
-  
+
   return (
     <>
       {state &&  <div ref={domNode} >{ active ? <UserMenu/>: <LoginFeature/>} </div>}
-    
-      {state2 &&  <div ref={domNode2} onClick={()=>clickHandler()} >  <ShowSearch/> </div>}
     <div class="search-container">
 
         <div class="logo"> 
@@ -107,7 +88,7 @@ export default function TopNav() {
                 <Link to="/">One Piece Card Store</Link> 
             </hi>
         </div>
-        <div id="search-feature-container" onClick={searchClickHandler}>  <SearchBar onClick={searchClickHandler}/></div>
+        <div className="empty-container"></div>
         <div className="right-icon">
             <div className="cart-icon-container" onClick={()=> cartClickHandler()}>
                 <span>{ cart.cartQuantity}</span>
@@ -136,6 +117,8 @@ export default function TopNav() {
             </div>
         </div>
     </div>
+    <SearchBar/>
+
     </>
   )
 }

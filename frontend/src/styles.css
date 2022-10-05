@@ -2,8 +2,10 @@
     margin: auto;
     max-width:  1240px;
     background-color: white;
+    position: relative;
 }
 body {
     margin: 0;
     padding: 0;
+    position: relative;
 }

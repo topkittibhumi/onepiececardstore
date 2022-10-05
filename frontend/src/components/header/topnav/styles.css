@@ -8,8 +8,8 @@
     position : relative;
     padding: 15px 15px;
     
-
 }
+
 .search-container .logo {
     padding: 10px ;
     min-width: 350px;
@@ -21,10 +21,9 @@
     text-transform: uppercase;
     color:#555;
 }
-
-
-
-
+.search-container .empty-container {
+    flex-grow: 1;
+}
 
 .search-container .right-icon {
     padding-left: 10px;

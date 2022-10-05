@@ -44,8 +44,17 @@ const data = {
             category: '6330841112afc94332f50b18',
             image: 'https://onepiececardstore.s3.ap-southeast-2.amazonaws.com/onepiece/card/ST01-003_D.png',
             brand: 'Bandai Namco Entertainment',
-            popular_card:3
-    
+            popular_card:3,
+            sellers: [{
+                user: "6331a12df6c771f8ceeb4fbd",
+                price: 49,
+                stock: 4,
+             },{
+                 user: "632edc722e9d72f98c1de7af",
+                 price: 70,
+                 stock: 10,
+             }
+             ]
         },
         {
             name: 'ST01-004',
@@ -53,7 +62,17 @@ const data = {
             category: '6330841112afc94332f50b18',
             image: 'https://onepiececardstore.s3.ap-southeast-2.amazonaws.com/onepiece/card/ST01-004_D.png',
             brand: 'Bandai Namco Entertainment',
-            popular_card:4
+            popular_card:4,
+            sellers: [{
+                user: "6331a12df6c771f8ceeb4fbd",
+                price: 22,
+                stock: 4,
+             },{
+                 user: "632edc722e9d72f98c1de7af",
+                 price: 33,
+                 stock: 3,
+             }
+             ]
 
         },
         {

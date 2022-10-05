@@ -102,6 +102,7 @@ export default function SearchBar() {
                            {product.sellers.length >0 && <li>Seller: {product.cheapest_seller.user.store}</li>}
                             <li>{product.sellers.length >0 ? product.cheapest_seller.stock+ " in stock" : "Out of stock"} </li>
 
+
                         </ul>
 
                         </div>

@@ -13,7 +13,7 @@ export default function Trending() {
         navigate('/product/'+id);
     }
     return (<>
-        <h2>Trending Product</h2>
+        <h2>Feature Products</h2>
         <div className='trending-container'>
 
         { trending_products.map(product =>(

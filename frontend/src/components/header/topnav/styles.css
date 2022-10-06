@@ -30,6 +30,7 @@
     display: flex;
 }
 .user-icon-container{
+    visibility: hidden;
     padding: 10px;
     vertical-align: center;
 }
@@ -111,6 +112,7 @@
         justify-content: space-around;
     }
     .user-icon-container{
+        visibility: hidden;
         padding: 10px;
         vertical-align: center;
     }

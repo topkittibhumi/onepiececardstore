@@ -5,13 +5,8 @@ export default function Navbar() {
     <div className="nav">
       <ul>
       <CustomLink to="/">Home</CustomLink>
-
-         <CustomLink to="/tcg">Card Game</CustomLink>
-        <CustomLink to="/single">Single Card</CustomLink>
-        <CustomLink to="/boardgame">Board Game</CustomLink>
-        <CustomLink to="/figurine">Figurine </CustomLink>
-
-        <CustomLink to="/accessorires">Accessories</CustomLink>
+      <CustomLink to="/faq">FAQ</CustomLink>
+      <CustomLink to="/contact">Contact us</CustomLink>
       </ul>
     </div>
   )

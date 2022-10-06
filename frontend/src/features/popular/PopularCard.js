@@ -15,7 +15,7 @@ export default function SingleCard() {
         navigate('/product/'+id);
     }
     return (<>
-        <h2>Popular card!</h2>
+        <h2>Popular card</h2>
         <div className='popular-container'>
 
         { popular_card.map(product =>(

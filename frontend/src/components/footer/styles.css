@@ -1,0 +1,24 @@
+.footer-container{
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    width:100%;
+    height:150px;
+    background-color: rgb(80, 78, 78);
+    display: flex;
+    flex-direction: column;
+    color: white;
+
+}
+.footer-contact{
+    flex-grow: 1;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.footer-license-text{
+    
+    font-size: 15px;
+    font-weight: bold;
+    margin-left:20px;
+
+}

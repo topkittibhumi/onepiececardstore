@@ -124,10 +124,10 @@ export default function ProductDetail() {
                     </div>
                     <div className='product-detail-info'>
 
+                    Stay tune! Product details will be updated before our grand opening in January 2023
+
                     
-If this card is Normal or Special Summoned: You can add 1 "Labrynth" card from your Deck to your hand, except "Arianna the Labrynth Servant". If another monster(s) leaves the field by your Normal Trap effect (except during the Damage Step): You can draw 1 card, then you can apply this effect.
-• From your hand, either Special Summon 1 Fiend monster, or Set 1 Spell/Trap.
-You can only use 1 "Arianna the Labrynth Servant" effect per turn, and only once that turn.
+
                     </div>
 
                 </div>

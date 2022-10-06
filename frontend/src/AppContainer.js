@@ -14,6 +14,7 @@ import { ProductProvider } from './contexts/ProductContext'
 import CartContext, { CartProvider } from "./contexts/CartContext";
 import "./styles.css"
 import Checkout from "./pages/Checkout";
+import Footer from "./components/footer/Footer"
 function AppContainer() {
   const cart = useContext(CartContext);
   
@@ -31,7 +32,7 @@ function AppContainer() {
           <Route path="/product/:id" element={<ProductDetail/>}/>
           <Route path="/checkout" element={<Checkout />}/>
         </Routes>
-     
+        <Footer/>
     </div>
     </>
   )

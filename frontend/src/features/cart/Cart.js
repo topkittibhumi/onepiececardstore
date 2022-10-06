@@ -66,7 +66,7 @@ export default function Cart() {
                 Subtotal ({cart.cartQuantity} items): ${cart.totalPrice} AUD
             </div>
             <div className="shopping-cart-container-button">
-                <button className="checkout-btn" onClick={ ()=>checkOutHandler()}> Proceed to Checkout  </button>
+                <button className="checkout-btn" > Proceed to Checkout  </button>
             </div>
               
         </div>  

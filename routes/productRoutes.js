@@ -1,6 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel.js';
-import { getPopularCard ,getProductSearch,getProduct,getProductSellerInfo, getCartTotal} from '../controllers/productController.js'
+import { getPopularCard ,getTrendingProducts,getProductSearch,getProduct,getProductSellerInfo, getCartTotal} from '../controllers/productController.js'
 
 const productRouter = express.Router();
 
@@ -17,10 +17,11 @@ productRouter.get('/slug/:slug', async(req,res)=>{
     }
 });
 
-
+productRouter.get('/trending', getTrendingProducts)
 productRouter.get('/popular/card', getPopularCard)
 productRouter.get('/products', getProductSearch)
 productRouter.get('/product',getProduct)
 productRouter.get('/product/user',getProductSellerInfo)
+
 productRouter.post('/price', getCartTotal)
 export default productRouter;

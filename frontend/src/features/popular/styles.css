@@ -32,13 +32,24 @@
     margin: 1px;
     max-height: 240;
     max-width: 240;
-
     height:240px;
 }
 
-.popular-container .popular-product-single .popular-product-single-detail-container {
-    height: 50px;
+ .popular-product-single-detail-container {
     text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.popular-name{
+    flex-grow: 1;
+    font-weight: bold;
+    color: black;
+    height: 40px;
+}
+.popular-price{
+    bottom: 0px;
+    height: 40px;
 }
 }
 
@@ -80,9 +91,21 @@
         height:240px;
     }
     
-    .popular-container .popular-product-single .popular-product-single-detail-container {
-        height: 50px;
+    .popular-product-single-detail-container {
         text-align: left;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .popular-name{
+        flex-grow: 1;
+        font-weight: bold;
+        color: black;
+        height: 40px;
+    }
+    .popular-price{
+        bottom: 0px;
+        height: 40px;
     }
     }
     

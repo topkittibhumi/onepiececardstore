@@ -1,0 +1,112 @@
+@media only screen and (min-width: 1240px) {
+
+    .trending-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        
+        overflow:hidden
+    }
+    
+    .trending-container .trending-product-single{
+    
+        margin: 1px;
+        max-width: 250px;
+        text-align: center;
+        background-color: rgb(249, 244, 244);
+    
+    }
+    .trending-container .trending-product-single:hover{
+    
+        background-color: grey;
+        cursor: pointer;
+    }
+    
+    .trending-container .popular-product-single .trending-product-single-image-container{
+    
+    
+        width:100%;
+        height: 250px;
+    
+    }
+    .trending-container .trending-product-single .trending-product-single-image-container img{
+        margin: 1px;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+    
+     .trending-product-single-detail-container {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .trending-name{
+        flex-grow: 1;
+        font-weight: bold;
+        color: black;
+        height: 40px;
+    }
+    .trending-price{
+        bottom: 0px;
+        height: 40px;
+    }
+    }
+    
+    
+    @media only screen and (max-width: 1239px) {
+    
+        .trending-container{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            
+            overflow:hidden
+        }
+        
+        .trending-container .trending-product-single{
+        
+            margin: 1px;
+            text-align: center;
+            background-color: rgb(249, 244, 244);
+        
+        }
+        .trending-container .trending-product-single:hover{
+        
+            background-color: grey;
+            cursor: pointer;
+        }
+        
+        .trending-container .trending-product-single .trending-product-single-image-container{
+        
+        
+            width:100%;
+            height: 250px;
+        
+        }
+        .trending-container .trending-product-single .trending-product-single-image-container img{
+            margin: 1px;
+            margin: 1px;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        }
+        
+        .trending-product-single-detail-container {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .trending-name{
+            flex-grow: 1;
+            font-weight: bold;
+            color: black;
+            height: 40px;
+        }
+        .trending-price{
+            bottom: 0px;
+            height: 40px;
+        }
+        }
+        
+        

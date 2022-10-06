@@ -4,9 +4,14 @@ export default function Navbar() {
   return (
     <div className="nav">
       <ul>
+      <CustomLink to="/">Home</CustomLink>
+
+         <CustomLink to="/tcg">Card Game</CustomLink>
         <CustomLink to="/single">Single Card</CustomLink>
-        <CustomLink to="/graded">Graded Card</CustomLink>
-        <CustomLink to="/sell">Sell</CustomLink>
+        <CustomLink to="/boardgame">Board Game</CustomLink>
+        <CustomLink to="/figurine">Figurine </CustomLink>
+
+        <CustomLink to="/accessorires">Accessories</CustomLink>
       </ul>
     </div>
   )

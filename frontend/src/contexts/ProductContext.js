@@ -8,7 +8,7 @@ const ProductContext = createContext();
 
 export function ProductProvider({ children }){
     const [popularCard, setPopularCard] = useState([]);
-
+    const [trendingProduct, setTrendingProduct] = useState([]);
     
     useEffect(() =>{
             console.log("PLEASE NO SEE")
@@ -16,7 +16,12 @@ export function ProductProvider({ children }){
                 const res = await axios.get('/api/products/popular/card?')
                 setPopularCard(res.data.products)
             }
+            const getTrendingProduct = async () =>{
+              const res = await axios.get('/api/products/trending')
+              setTrendingProduct(res.data.products)
+          }
             getPopularCard()
+            getTrendingProduct()
     },[])
 
     const state = {
@@ -25,7 +30,7 @@ export function ProductProvider({ children }){
     }
 
     return (
-      <ProductContext.Provider value={{popularCard, state }}>
+      <ProductContext.Provider value={{popularCard, trendingProduct ,state }}>
         {children}
       </ProductContext.Provider>
     );

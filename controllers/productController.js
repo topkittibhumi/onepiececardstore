@@ -153,6 +153,106 @@ export const getPopularCard = asyncHandler(async(req, res) => {
 
 })
 
+export const getTrendingProducts = asyncHandler(async(req, res) => {
+  try{
+      const ObjectId = mongoose.Types.ObjectId;
+      const pipeline = [
+          {
+            '$lookup': {
+              'from': 'users', 
+              'localField': 'sellers.user', 
+              'foreignField': '_id', 
+              'as': 'related'
+            }
+          }, {
+            '$project': {
+              'sellers': {
+                '$map': {
+                  'input': '$sellers', 
+                  'in': {
+                    'user': {
+                      '$arrayElemAt': [
+                        '$related', {
+                          '$indexOfArray': [
+                            '$related._id', '$$this.user'
+                          ]
+                        }
+                      ]
+                    }, 
+                    'price': '$$this.price', 
+                    'stock': '$$this.stock'
+                  }
+                }
+              }, 
+              'name': '$name', 
+              'category': '$category', 
+              'image': '$image', 
+              'brand': '$brand', 
+              'popular_card': '$popular_card', 
+              'trending': '$trending', 
+              'checked': '$checked', 
+              'slug': '$slug'
+            }
+          }, {
+            '$match': {
+              'trending': {
+                '$gte': 1
+              }
+            }
+          }, {
+            '$sort': {
+              'trending': 1
+            }
+          }, {
+            '$unset': [
+              'sellers.user.resetPasswordExpire', 'sellers.user.resetPasswordToken', 'sellers.user.password'
+            ]
+          }, {
+            '$addFields': {
+              'cheapest_seller': {
+                '$reduce': {
+                  'input': '$sellers', 
+                  'initialValue': {
+                    'price': 99999999
+                  }, 
+                  'in': {
+                    '$cond': [
+                      {
+                        '$lte': [
+                          '$$this.price', '$$value.price'
+                        ]
+                      }, '$$this', '$$value'
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ];
+
+        const trending_products = await Product.aggregate(pipeline)
+
+        if(trending_products){
+
+      
+            res.status(200).json({ sucess: true, result: trending_products.length,products: trending_products})
+
+        }
+        else{
+            res.status(400).json({
+                message : 'product not found'
+            })
+            
+        }
+        
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+
+})
+
+
+
 export const getProducts = asyncHandler(async(req,res) => {
         try {
             const features = new APIfeatures(Product.find(), req.query)

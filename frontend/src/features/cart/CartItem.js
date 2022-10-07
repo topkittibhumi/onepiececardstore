@@ -95,7 +95,7 @@ export default function CartItem( {product_id, seller_id, quantity}) {
                         
                         <select className='quantity-option' value={selected}  onChange={(e)=>setSelected(e.target.value)} >
                                         {  quantitySelection.map((element)=>(
-                                            <option > {element}</option>
+                                            <option key={element}> {element}</option>
                                         )) }
                         </select>
                         

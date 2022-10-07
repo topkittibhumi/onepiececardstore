@@ -93,7 +93,7 @@ export default function ProductDetail() {
                               
                             <select className='quantity-option' value={selected}  onChange={(e)=>setSelected(e.target.value)} >
                                 {  quantitySelection.map((element)=>(
-                                    <option key="{element}"> {element}</option>
+                                    <option key={element}> {element}</option>
                                 )) }
                             </select>
                             

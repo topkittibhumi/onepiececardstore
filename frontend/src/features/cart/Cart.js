@@ -56,7 +56,6 @@ export default function Cart() {
                 </div>
             </div>
             { cart.cart.map((element)=>(
-
                 <CartItem  product_id ={element.id} seller_id={element.user_id} quantity={element.quantity} {...element} /> 
             )
             )}

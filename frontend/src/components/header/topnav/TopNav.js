@@ -81,12 +81,10 @@ export default function TopNav() {
   return (
     <>
       {state &&  <div ref={domNode} >{ active ? <UserMenu/>: <LoginFeature/>} </div>}
-    <div class="search-container">
+    <div className="search-container">
 
-        <div class="logo"> 
-            <hi>
+        <div className="logo"> 
                 <Link to="/">One Piece Card Store</Link> 
-            </hi>
         </div>
         <div className="empty-container"></div>
         <div className="right-icon">

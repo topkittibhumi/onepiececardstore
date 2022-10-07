@@ -17,7 +17,7 @@ export default function Trending() {
         <div className='trending-container'>
 
         { trending_products.map(product =>(
-        
+        <div key={product._id}>
         <div className='trending-product-single' onClick={()=>cardClickHandler(product._id)}  >
         <div className='trending-product-single-image-container'>
 
@@ -31,6 +31,7 @@ export default function Trending() {
             <div className='trending-price'>
                 <p>{ product.cheapest_seller.price <999999? "$"+product.cheapest_seller.price : "Not available"}</p>
             </div>
+        </div>
         </div>
         </div>
 ))}

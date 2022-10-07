@@ -19,7 +19,7 @@ export default function SingleCard() {
         <div className='popular-container'>
 
         { popular_card.map(product =>(
-        
+        <div key={product._id}>
         <div className='popular-product-single' onClick={()=>cardClickHandler(product._id)}  >
         <div className='popular-product-single-image-container'>
 
@@ -33,6 +33,7 @@ export default function SingleCard() {
             <div className='popular-price'>
                 <p>{ product.cheapest_seller.price <999999? "$"+product.cheapest_seller.price : "Not available"}</p>
             </div>
+        </div>
         </div>
         </div>
 ))}

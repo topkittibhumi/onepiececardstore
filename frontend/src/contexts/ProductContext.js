@@ -25,8 +25,7 @@ export function ProductProvider({ children }){
     },[])
 
     const state = {
-        productsAPI : ProductsAPI(),
-        categoriesAPI: CategoriesAPI()
+        productsAPI : ProductsAPI()
     }
 
     return (

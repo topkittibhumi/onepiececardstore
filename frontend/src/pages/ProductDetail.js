@@ -93,7 +93,7 @@ export default function ProductDetail() {
                               
                             <select className='quantity-option' value={selected}  onChange={(e)=>setSelected(e.target.value)} >
                                 {  quantitySelection.map((element)=>(
-                                    <option > {element}</option>
+                                    <option key="{element}"> {element}</option>
                                 )) }
                             </select>
                             
@@ -124,7 +124,7 @@ export default function ProductDetail() {
                     </div>
                     <div className='product-detail-info'>
 
-                    Stay tune! Product details will be updated before our grand opening in January 2023
+                    Stay tune! Product details will be updated before our grand opening in Q1 2023
 
                     
 

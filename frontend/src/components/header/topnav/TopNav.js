@@ -31,7 +31,7 @@ let useClickOutside = (handler)=> {
 
 };
 
-
+//onClick={accountClickHandler} 
 export default function TopNav() {
 
 
@@ -101,7 +101,7 @@ export default function TopNav() {
                 </Link>
         
             </div>
-            <div className="user-icon-container" onClick={accountClickHandler}  >
+            <div className="user-icon-container"  >
                 <Link className="account-container">
                     <div>
                     <img src={User} alt="" width="30" />

@@ -30,7 +30,7 @@
     display: flex;
 }
 .user-icon-container{
-    visibility: hidden;
+    visibility:visible;
     padding: 10px;
     vertical-align: center;
 }
